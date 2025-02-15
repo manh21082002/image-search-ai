@@ -1,0 +1,37 @@
+# Loại bỏ môi trường ảo
+venv/
+env/
+
+# Loại bỏ thư mục build, cache, log
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+logs/
+
+# Thư mục dữ liệu raw và processed
+data/raw/
+data/processed/
+
+# Bỏ qua tệp model và checkpoint (nếu có)
+models/
+checkpoints/
+
+# Ignore tệp Notebook output
+notebooks/.ipynb_checkpoints/
+
+# Docker và môi trường liên quan
+*.dockerfile
+.dockerignore
+
+# Thư mục của hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Ignore các file liên quan đến VS Code/PyCharm
+.vscode/
+.idea/
+
+# Thư mục của hệ thống Git
+.git/
