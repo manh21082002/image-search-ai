@@ -1,7 +1,7 @@
 # 🚀 Image Search AI - Hệ thống Tìm kiếm Hình ảnh bằng Trí tuệ Nhân tạo
 
 ## 📝 Giới thiệu
-**Image Search AI** là một hệ thống tìm kiếm hình ảnh sử dụng Machine Learning và Deep Learning như **YOLO, R-CNN, FAISS** để tìm kiếm ảnh tương tự từ cơ sở dữ liệu.
+**Image Search AI** là một hệ thống tìm kiếm hình ảnh món ăn sử dụng Machine Learning và Deep Learning như **YOLO, R-CNN, FAISS** để tìm kiếm ảnh tương tự từ cơ sở dữ liệu.
 
 🔹 **Chức năng chính**:
 - 📷 **Nhận diện vật thể** trong ảnh

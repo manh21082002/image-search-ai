@@ -11,6 +11,7 @@ __pycache__/
 logs/
 
 # Thư mục dữ liệu raw và processed
+data/
 data/raw/
 data/processed/
 
