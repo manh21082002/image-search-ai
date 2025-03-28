@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Search</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; }
+    .img-result { margin: 10px; display: inline-block; }
+    .img-result img { width: 200px; border-radius: 8px; box-shadow: 0 0 8px #ccc; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Image Search System</h1>
+  <form method="post" enctype="multipart/form-data" action="/search_local">
+    <input type="file" name="file" accept="image/*" required />
+    <button type="submit">Tìm ảnh tương tự</button>
+  </form>
+
+  {% if message %}
+    <h2>Kết quả: {{ message }}</h2>
+    {% for r in results %}
+      <div class="img-result">
+        <img src="data:image/jpeg;base64,{{ r.image_base64 }}" />
+        <div><code>{{ r.path }}</code></div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>
