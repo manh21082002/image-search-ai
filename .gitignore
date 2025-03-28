@@ -21,7 +21,7 @@ checkpoints/
 
 # Ignore tệp Notebook output
 notebooks/.ipynb_checkpoints/
-
+model
 # Docker và môi trường liên quan
 *.dockerfile
 .dockerignore
