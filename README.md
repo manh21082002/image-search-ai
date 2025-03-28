@@ -13,24 +13,51 @@
 ## 📂 Cấu trúc thư mục
 ```plaintext
 image-search-system/
-│── app/
-│   │── models/               # Chứa mô hình AI (YOLO, R-CNN, FAISS)
-│   │── services/             # Xử lý ảnh, mã hóa vector, tìm kiếm
-│   │── routes/               # API endpoints
-│   │── utils/                # Hàm hỗ trợ
-│   │── database.py           # Quản lý cơ sở dữ liệu ảnh
-│   │── config.py             # Cấu hình hệ thống
-│── data/
-│   │── raw/                  # Dữ liệu gốc (ảnh)
-│   │── processed/            # Dữ liệu sau khi tiền xử lý
-│── notebooks/                # Notebook kiểm thử mô hình
-│── scripts/                  # Script train model
-│── static/                   # Frontend, giao diện web
-│── logs/                     # Nhật ký hoạt động
-│── requirements.txt          # Danh sách thư viện
-│── Dockerfile                # Cấu hình Docker
-│── README.md                 # Hướng dẫn sử dụng
-│── main.py                   # Khởi động FastAPI
+├── main.py
+├── README.md
+├── requirements.txt
+├── Dockerfile
+├── .gitignore
+├── .gitattributes
+│
+├── app/
+│   ├── config.py
+│   ├── database.py
+│   ├── models/
+│   │   ├── feature_vectors.pkl
+│   │   ├── features.npy
+│   │   ├── image_names.pkl
+│   │   ├── index.faiss
+│   │   ├── resnet50_embedding.pth
+│   │   ├── resnet50_embedding_v2.pth
+│   │   ├── yolov8_food.pt
+│   │
+│   ├── routes/
+│   │   └── search_route.py
+│   │
+│   ├── services/
+│   │   ├── detection_service.py
+│   │   ├── embedding_service.py
+│   │   └── search_service.py
+│   │
+│   ├── templates/
+│   │   └── index.html
+│   │
+│   ├── static/
+│       └── favicon.ico
+│
+├── notebooks/
+│   ├── 01_collect_data.ipynb
+│   ├── 02_training_yolo.ipynb
+│   ├── 03_encoding-image-and-testing.ipynb
+│   ├── 04_train_model_embedding.ipynb
+│   └── 05_train_model_embedding-v2.ipynb
+│
+├── data/                # Ảnh gốc & crop
+├── logs/                # Log hệ thống
+├── scripts/             # Script huấn luyện / xử lý
+├── venv/                # Virtual Environment (bỏ vào .gitignore)
+
 
 ### 🟦 **1. Cài đặt môi trường**
 ```bash
