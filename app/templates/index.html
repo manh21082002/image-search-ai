@@ -9,11 +9,19 @@
   </style>
 </head>
 <body>
-  <h1>🔍 Image Search System</h1>
-  <form method="post" enctype="multipart/form-data" action="/search_local">
+  <h1> Image Search System</h1>
+  <!-- Form upload ảnh -->
+  <form method="post" enctype="multipart/form-data" action="/">
     <input type="file" name="file" accept="image/*" required />
     <button type="submit">Tìm ảnh tương tự</button>
   </form>
+
+  {% if uploaded_image_base64 %}
+    <h2>Ảnh tải lên:</h2>
+    <div class="img-result">
+      <img src="data:image/jpeg;base64,{{ uploaded_image_base64 }}" />
+    </div>
+  {% endif %}
 
   {% if message %}
     <h2>Kết quả: {{ message }}</h2>

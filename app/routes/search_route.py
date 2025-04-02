@@ -32,24 +32,33 @@ def image_to_base64(image_path):
 async def search_image(file: UploadFile = File(...)):
     contents = await file.read()
     image = Image.open(BytesIO(contents)).convert("RGB")
+    print("Đã nhận ảnh kích thước:", image.size)
 
     bboxes = detector.detect_objects(image)
+    print("Số bounding box phát hiện:", len(bboxes))
 
     if not bboxes:
         return {"message": "Không phát hiện món ăn nào", "results": []}
 
     x1, y1, x2, y2 = bboxes[0]
     cropped_img = image.crop((x1, y1, x2, y2))
+    print("Crop ảnh tại:", (x1, y1, x2, y2))
 
     vector = encoder.encode(cropped_img)
+    print("Vector shape:", vector.shape)
+
     result_paths = search_engine.search(vector, top_k=5)
+    print("Ảnh kết quả tìm được:", result_paths)
 
     result_images = []
     for path in result_paths:
-        result_images.append({
-            "path": path,
-            "image_base64": image_to_base64(path)
-        })
+        try:
+            result_images.append({
+                "path": path,
+                "image_base64": image_to_base64(path)
+            })
+        except Exception as e:
+            print("Lỗi khi đọc ảnh:", path, "Lỗi:", e)
 
     return {
         "message": "Thành công",

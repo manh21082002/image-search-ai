@@ -11,4 +11,5 @@ INDEX_PATH = os.path.join(BASE_DIR, "models", "index.faiss")
 IMAGE_NAME_PATH = os.path.join(BASE_DIR, "models", "image_names.pkl")
 
 # Thư mục chứa ảnh gốc đã crop
-BASE_IMAGE_DIR = os.path.join(BASE_DIR, "data", "cropped_images")
+BASE_IMAGE_DIR = os.path.join(BASE_DIR, "data", "processed")
+
