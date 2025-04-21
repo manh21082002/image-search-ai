@@ -6,58 +6,28 @@
 🔹 **Chức năng chính**:
 - 📷 **Nhận diện vật thể** trong ảnh
 - 🚀 **Mã hóa ảnh thành vector đặc trưng** để tìm kiếm nhanh
-- 🔍 **Tìm kiếm kết hợp trên database nội bộ và API Google/Bing**
+- 
 
 ---
 
 ## 📂 Cấu trúc thư mục
 ```plaintext
-image-search-system/
-├── main.py
-├── README.md
-├── requirements.txt
-├── Dockerfile
-├── .gitignore
-├── .gitattributes
-│
+```
+root/
 ├── app/
-│   ├── config.py
-│   ├── database.py
-│   ├── models/
-│   │   ├── feature_vectors.pkl
-│   │   ├── features.npy
-│   │   ├── image_names.pkl
-│   │   ├── index.faiss
-│   │   ├── resnet50_embedding.pth
-│   │   ├── resnet50_embedding_v2.pth
-│   │   ├── yolov8_food.pt
-│   │
-│   ├── routes/
-│   │   └── search_route.py
-│   │
-│   ├── services/
-│   │   ├── detection_service.py
-│   │   ├── embedding_service.py
-│   │   └── search_service.py
-│   │
-│   ├── templates/
-│   │   └── index.html
-│   │
-│   ├── static/
-│       └── favicon.ico
-│
-├── notebooks/
-│   ├── 01_collect_data.ipynb
-│   ├── 02_training_yolo.ipynb
-│   ├── 03_encoding-image-and-testing.ipynb
-│   ├── 04_train_model_embedding.ipynb
-│   └── 05_train_model_embedding-v2.ipynb
-│
-├── data/                # Ảnh gốc & crop
-├── logs/                # Log hệ thống
-├── scripts/             # Script huấn luyện / xử lý
-├── venv/                # Virtual Environment (bỏ vào .gitignore)
-
+│   ├── config.py                # Cấu hình đường dẫn và tham số hệ thống
+│   ├── data/                    # Dữ liệu ảnh
+│   ├── models/                  # (tuỳ chọn) lưu model custom
+│   ├── services/                # Các service xử lý detection, embedding, faiss
+│   ├── static/                  # Ảnh nền, ảnh placeholder
+│   ├── templates/              # HTML sử dụng Jinja2
+│   └── utils/                   # Hàm hỗ trợ thêm (nếu có)
+├── main.py                     # Chạy FastAPI app
+├── notebooks/                  # Các notebook huấn luyện thử nghiệm
+├── scripts/                    # Script train model
+├── requirements.txt            # Thư viện cần cài
+├── Dockerfile                  # Đóng gói docker (nếu deploy)
+```
 
 ### 🟦 **1. Cài đặt môi trường**
 ```bash
@@ -66,3 +36,11 @@ source venv/bin/activate  # macOS/Linux
 venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 uvicorn main:app --reload
+
+Truy cập: [http://localhost:8000](http://localhost:8000)
+## 🧠 Công nghệ sử dụng
+- `FastAPI` + `Jinja2` template
+- `YOLOv8` để detect món ăn trong ảnh
+- `ResNet50` để mã hoá ảnh thành vector
+- `FAISS` để tìm ảnh tương đồng
+- `Pillow`, `numpy`, `base64` để xử lý ảnh
