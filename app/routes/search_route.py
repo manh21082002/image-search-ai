@@ -8,9 +8,9 @@ from app.services.search_service import ImageSearchEngine
 from app.config import MODEL_YOLO_PATH, MODEL_EMBEDDING_PATH, INDEX_PATH, IMAGE_NAME_PATH, BASE_IMAGE_DIR
 
 import os
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-
 import base64
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 router = APIRouter()
 
@@ -30,26 +30,45 @@ def image_to_base64(image_path):
 
 @router.post("/search")
 async def search_image(file: UploadFile = File(...)):
+    print("Bắt đầu quá trình tìm kiếm ảnh...")
+    
+    # Đọc file ảnh từ input
     contents = await file.read()
     image = Image.open(BytesIO(contents)).convert("RGB")
+    print("Ảnh đã được đọc và chuyển đổi thành RGB")
 
+    # Phát hiện các vật thể trong ảnh
+    print("Bắt đầu phát hiện vật thể...")
     bboxes = detector.detect_objects(image)
-
     if not bboxes:
+        print("Không phát hiện vật thể nào trong ảnh.")
         return {"message": "Không phát hiện món ăn nào", "results": []}
 
+    print(f"Phát hiện {len(bboxes)} vật thể trong ảnh.")
+    
+    # Cắt ảnh theo bounding box của vật thể
     x1, y1, x2, y2 = bboxes[0]
     cropped_img = image.crop((x1, y1, x2, y2))
+    print(f"Đã cắt ảnh thành công, tọa độ bounding box: ({x1}, {y1}, {x2}, {y2})")
 
+    # Mã hóa ảnh đã cắt
+    print("Bắt đầu mã hóa ảnh...")
     vector = encoder.encode(cropped_img)
-    result_paths = search_engine.search(vector, top_k=5)
+    print(f"Ảnh đã được mã hóa thành công thành vector: {vector.shape}")
 
+    # Tìm kiếm ảnh tương tự trong cơ sở dữ liệu
+    print("Bắt đầu tìm kiếm ảnh trong cơ sở dữ liệu...")
+    result_paths = search_engine.search(vector, top_k=5)
+    print(f"Đã tìm được {len(result_paths)} ảnh tương tự")
+
+    # Chuyển đổi ảnh thành base64 để gửi lại cho client
     result_images = []
     for path in result_paths:
         result_images.append({
             "path": path,
             "image_base64": image_to_base64(path)
         })
+    print("Đã chuyển tất cả ảnh kết quả thành base64")
 
     return {
         "message": "Thành công",

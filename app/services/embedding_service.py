@@ -19,7 +19,7 @@ class EmbeddingNet(nn.Module):
         return F.normalize(x, p=2, dim=1)
 
 class EmbeddingModel:
-    def __init__(self, model_path: str = "models/resnet50_embedding.pth"):
+    def __init__(self, model_path: str = "models/resnet50_embedding_v2.pth"):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = EmbeddingNet().to(self.device)
         self.model.load_state_dict(torch.load(model_path, map_location=self.device))
