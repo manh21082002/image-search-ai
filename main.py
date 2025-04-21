@@ -13,6 +13,9 @@ from app.services.embedding_service import EmbeddingModel
 from app.services.search_service import ImageSearchEngine
 from app.config import MODEL_YOLO_PATH, MODEL_EMBEDDING_PATH, INDEX_PATH, IMAGE_NAME_PATH, BASE_IMAGE_DIR
 
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
 app = FastAPI(title="Image Search API")
 
 # Mount static & template
@@ -29,8 +32,12 @@ search_engine = ImageSearchEngine(
 )
 
 def image_to_base64(image_path):
+    if not os.path.exists(image_path):
+        print(f"ERROR: Tệp ảnh không tồn tại tại {image_path}")
+        return None  # Hoặc có thể trả về giá trị mặc định
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode("utf-8")
+
 
 @app.get("/", response_class=HTMLResponse)
 async def homepage(request: Request):
